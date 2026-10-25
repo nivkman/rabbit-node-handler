@@ -1,0 +1,54 @@
+name: CI
+
+# Standard EnterGreat publish pipeline. On push to main: auto patch-bump the
+# version, commit + tag it back to main ([skip ci] so it doesn't loop), then
+# publish to npm. NODE_AUTH_TOKEN is job-level because @entergreat deps are
+# private — installing them needs auth, not just publishing. No test step.
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  publish:
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org/
+
+      - run: npm ci
+
+      # Both release steps skip until the NPM_TOKEN secret exists, so a push to a
+      # fresh repo doesn't leave a version bump + tag behind with nothing published.
+      # Check the secret itself: setup-node exports a placeholder NODE_AUTH_TOKEN
+      # (XXXXX-XXXXX-XXXXX-XXXXX) when it is empty, so that variable is never blank.
+      - name: Check for npm token
+        id: token
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: echo "present=$([ -n "$NPM_TOKEN" ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+
+      - name: Bump patch version
+        if: steps.token.outputs.present == 'true'
+        run: |
+          git config user.name  "eg-ci[bot]"
+          git config user.email "ci@entergreat.com"
+          npm version patch -m "ci: release %s [skip ci]"
+          git push --follow-tags origin HEAD:main
+
+      - name: Publish to npm
+        if: steps.token.outputs.present == 'true'
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -1,0 +1,56 @@
+{
+  "name": "rabbit-node-handler",
+  "version": "1.0.0",
+  "description": "A lightweight and easy-to-use RabbitMQ handler for Node.js applications. One call sets up a durable exchange, a consumer queue and a confirmed publisher, with automatic reconnection and graceful shutdown. Same API as kafka-node-handler.",
+  "type": "module",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.js"
+    }
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nivkman/rabbit-node-handler.git"
+  },
+  "keywords": [
+    "rabbitmq",
+    "rabbit",
+    "amqp",
+    "amqplib",
+    "node",
+    "messaging",
+    "queue",
+    "event-driven",
+    "pubsub",
+    "consumer",
+    "producer",
+    "microservices",
+    "kafka-alternative",
+    "handler"
+  ],
+  "author": "Niv Kaufman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nivkman/rabbit-node-handler/issues"
+  },
+  "homepage": "https://github.com/nivkman/rabbit-node-handler#readme",
+  "files": [
+    "src/"
+  ],
+  "dependencies": {
+    "amqplib": "^2.2.0",
+    "logger-standard": "^2.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
