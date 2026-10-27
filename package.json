@@ -1,6 +1,6 @@
 {
   "name": "rabbit-node-handler",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A lightweight and easy-to-use RabbitMQ handler for Node.js applications. One call sets up a durable exchange, a consumer queue and a confirmed publisher, with automatic reconnection and graceful shutdown. Same API as kafka-node-handler.",
   "type": "module",
   "main": "src/index.js",
