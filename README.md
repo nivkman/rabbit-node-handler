@@ -1,5 +1,7 @@
 # Rabbit Node.js Handler 🐇
 
+[![npm version](https://img.shields.io/npm/v/rabbit-node-handler)](https://www.npmjs.com/package/rabbit-node-handler)
+
 [![npm version](https://img.shields.io/npm/v/rabbit-node-handler.svg)](https://www.npmjs.com/package/rabbit-node-handler)
 [![npm downloads](https://img.shields.io/npm/dm/rabbit-node-handler.svg)](https://www.npmjs.com/package/rabbit-node-handler)
 [![tests](https://github.com/nivkman/rabbit-node-handler/actions/workflows/test.yml/badge.svg)](https://github.com/nivkman/rabbit-node-handler/actions/workflows/test.yml)
